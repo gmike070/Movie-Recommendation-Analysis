@@ -6,7 +6,9 @@ Movie Recommendation Analysis Using Python
 The objective of this project is to analyze movie performance data to uncover patterns in profitability, language-based gross earnings, and genre-level financial outcomes. By examining correlations between budget, gross revenue, profit, return on investment (ROI), ratings, and audience engagement, the project seeks to identify the key factors driving commercial success. Additionally, recommendation systems will be developed using movie genres, actors, and content similarity to suggest films that align with user preferences. This analysis will provide actionable insights for decision-making in film production, marketing, and distribution strategies.
 
 ## Problem Statement:
-Perform analysis and Basic Recommendations based on Similar Genres and Movies which Users prefer. Some of the Key Points on which we will be focusing include: 1.Profitability of Movies 
+Perform analysis and Basic Recommendations based on Similar Genres and Movies which Users prefer. Some of the Key Points on which we will be focusing include: 
+
+1.Profitability of Movies 
 2.Language based Gross Analysis 
 3.Comparison of Gross and Profit for Different Genres, 
 4.Recommendation systems based on Actors, Movies, Genres. 
