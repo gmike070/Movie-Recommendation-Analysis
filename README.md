@@ -18,7 +18,142 @@ Perform analysis and Basic Recommendations based on Similar Genres and Movies wh
 
 This Project will help us to understand Correlation between these factors.
 
+### Setting up the environment
+Installing the required libraries:
 
+•	We need Numpy for mathematical operation
+
+•	Pandas for Dataframe Manipulation
+
+•	Seaborn and Matplotlib for data visualization
+
+•	And finally Jupyter Notebook to build an interactive ipython notebook
+
+
+
+
+### Python Code (Step-by-Step)
+Step 1: Import Libraries
+   ```python
+    # lets import the basic libraries
+import numpy as np
+import pandas as pd
+ 
+# for data visualization
+import matplotlib.pyplot as plt
+import seaborn as sns
+import plotly.express as px
+    
+# for jupyter notebbook widgets
+import ipywidgets as widgets
+from ipywidgets import interact
+from ipywidgets import interact_manual
+
+# for interactive shells
+from IPython.display import display
+
+# Supress warnings
+import warnings
+warnings.filterwarnings('ignore')
+   
+# setting up the chart size and background
+plt.rcParams['figure.figsize'] =(16,8)
+plt.style.use('fivethirtyeight')
+ ```
+Step 2: Load and Inspect the Dataset
+Python:
+ ```python
+# let read the dataset
+data = pd.read_csv('movie_metadata.csv')
+# lets check the shape
+print(data.shape)
+ ```
+Output:
+ <img width="975" height="247" alt="image" src="https://github.com/user-attachments/assets/b452021c-d02f-44d5-b72b-345b80ac13b2" />
+
+Step 3: Data Cleaning & Preprocessing
+Python code:
+```python
+ # DATA CLEANING
+# lets check the data info
+data.info()
+# lets remove unnecessary columns from the dataset
+
+# use the 'drop()' function to drop the unnecessary columns
+
+data = data.drop(['color','director_facebook_likes','cast_total_facebook_likes','actor_3_facebook_likes','actor_1_facebook_likes','actor_2_facebook_likes','country','content_rating','movie_imdb_link','aspect_ratio','plot_keywords','facenumber_in_poster'], axis =1)
+data.columns
+# lets check the rows having high percentage of missing values in the dataset
+round(100*(data.isnull().sum()/len(data.index)),2)
+
+# Since 'gross' and 'budget' columns have large number of NaN values, drop all the rows with NaNs at this column using the
+# 'isnan' function of Numpy along with a negation '~'
+
+data = data[~np.isnan(data['gross'])]
+data = data[~np.isnan(data['budget'])]
+
+# now check the number of missing value column
+data.isnull().sum()
+
+# the row for which the sum of Null is less than two are retained
+
+data = data[data.isnull().sum(axis =1) <= 2]
+data.isnull().sum()
+
+# lets input the missing values
+
+# using mean for numerical columns
+data['num_critic_for_reviews'].fillna(data['num_critic_for_reviews'].mean(),inplace = True)
+data['duration'].fillna(data['duration'].mean(),inplace = True)
+
+# using mode for categorical column
+data['language'].fillna(data['language'].mode()[0], inplace = True)
+
+# As we know that we cannot use the statistical values for imputing the missing values of actor names, so we will replace the actor names with "Unknown Actor"
+
+data['actor_2_name'].fillna('Unknown Actor', inplace = True)
+data['actor_3_name'].fillna('Unknown Actor', inplace = True)
+
+# As we input all the missing values let check the number of the total missing values in the dataset
+data.isnull().sum().sum()
+
+# Using mean for numerical columns
+data['num_critic_for_reviews'].fillna(data['num_critic_for_reviews'].mean(), inplace=True)
+data['duration'].fillna(data['duration'].mean(), inplace=True)
+
+# Using mode for categorical column
+data['language'].fillna(data['language'].mode()[0], inplace=True)
+
+# Replacing missing actor names with 'Unknown Actor'
+data['actor_2_name'].fillna('Unknown Actor', inplace=True)
+data['actor_3_name'].fillna('Unknown Actor', inplace=True)
+
+# Check total missing values
+total_missing = data.isnull().sum().sum()
+print(f"Total missing values: {total_missing}")
+
+# lets convert the gross and budget from $ to million $ to make our analysis easier
+data['gross'] = data['gross']/1000000
+data['budget'] = data['budget']/1000000
+
+# lets create a profit column using the budget and gross
+data['Profit'] = data['gross'] - data['budget']
+
+# lets also check the name of Top 10 profitable movies
+data[['Profit','movie_title']].sort_values(by = 'Profit', ascending = False).head(10)
+
+```
+Profit	movie_title
+0	523.505847	Avatar
+29	502.177271	Jurassic World
+26	458.672302	Titanic
+3024	449.935665	Star Wars: Episode IV - A New Hope
+3080	424.449459	E.T. the Extra-Terrestrial
+17	403.279547	The Avengers
+509	377.783777	The Lion King
+240	359.544677	Star Wars: Episode I - The Phantom Menace
+66	348.316061	The Dark Knight
+439	329.999255	The Hunger Games
 
 
 ## Conclusion
