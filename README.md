@@ -69,6 +69,7 @@ data = pd.read_csv('movie_metadata.csv')
 print(data.shape)
  ```
 Output:
+
 <img width="199" height="32" alt="image" src="https://github.com/user-attachments/assets/716e1260-b91d-4947-99fa-e198a7aee2f4" />
 
 Step 3: Data Cleaning & Preprocessing
@@ -143,7 +144,8 @@ data['Profit'] = data['gross'] - data['budget']
 data[['Profit','movie_title']].sort_values(by = 'Profit', ascending = False).head(10)
 
 ```
-<img width="359" height="260" alt="image" src="https://github.com/user-attachments/assets/7ec7368d-f417-4cde-9ca4-62ca5e41f0f1" />
+<img width="359" height="262" alt="image" src="https://github.com/user-attachments/assets/1996db25-ca70-48c2-be12-a121f1257e10" />
+
 
 
 ## Conclusion
