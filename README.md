@@ -69,7 +69,7 @@ data = pd.read_csv('movie_metadata.csv')
 print(data.shape)
  ```
 Output:
- <img width="975" height="247" alt="image" src="https://github.com/user-attachments/assets/b452021c-d02f-44d5-b72b-345b80ac13b2" />
+<img width="199" height="32" alt="image" src="https://github.com/user-attachments/assets/716e1260-b91d-4947-99fa-e198a7aee2f4" />
 
 Step 3: Data Cleaning & Preprocessing
 Python code:
@@ -143,17 +143,7 @@ data['Profit'] = data['gross'] - data['budget']
 data[['Profit','movie_title']].sort_values(by = 'Profit', ascending = False).head(10)
 
 ```
-Profit	movie_title
-0	523.505847	Avatar
-29	502.177271	Jurassic World
-26	458.672302	Titanic
-3024	449.935665	Star Wars: Episode IV - A New Hope
-3080	424.449459	E.T. the Extra-Terrestrial
-17	403.279547	The Avengers
-509	377.783777	The Lion King
-240	359.544677	Star Wars: Episode I - The Phantom Menace
-66	348.316061	The Dark Knight
-439	329.999255	The Hunger Games
+<img width="359" height="260" alt="image" src="https://github.com/user-attachments/assets/7ec7368d-f417-4cde-9ca4-62ca5e41f0f1" />
 
 
 ## Conclusion
