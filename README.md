@@ -178,16 +178,86 @@ data['language'] = data['language'].apply(language)
 data['language'].value_counts()
 ```
 Output:
+
 <img width="205" height="65" alt="image" src="https://github.com/user-attachments/assets/a2a196f7-89fd-4ebb-8d1b-53e1a0d5aa84" />
 
+```
+# lets define a function for categorizing Duration of movies
 
+def duration(x):
+    if x <= 120:
+        return 'Short'
+    else:
+        return 'Long'
 
+# lets apply the function on the duration column
+data['duration'] = data['duration'].apply(duration)
 
+# lets check the values of Duration column
+data['duration'].value_counts()
+```
+Output:
 
+<img width="203" height="59" alt="image" src="https://github.com/user-attachments/assets/02d934bd-02c8-48b3-a0fe-0be48adffbd3" />
 
+```
+# lets check the value in the Genres column
 
+data['genres'].value_counts()
+```
+Output:
 
+<img width="319" height="176" alt="image" src="https://github.com/user-attachments/assets/ff30de3a-71c3-4414-9993-21d9d21f6cde" />
 
+```
+data['genres'].str.split('|')[0]
+```
+Output:
+
+<img width="324" height="31" alt="image" src="https://github.com/user-attachments/assets/4c370b1b-6b95-4bad-ba08-e227ca4049b7" />
+
+```
+# we can see from the above output that most of the movies are having a lot of genres
+# also, a movie can have so many genres so lets keep four genres
+
+data['Moviegenres'] = data['genres'].str.split('|')
+data['Genre1'] = data['Moviegenres'].apply(lambda x: x[0])
+
+# some of the movies have only one genre. In such cases, assign the same genre to 'genre_2 as well
+
+data['Genre2'] = data['Moviegenres'].apply(lambda x: x[1] if len(x) > 1 else x[0])
+data['Genre3'] = data['Moviegenres'].apply(lambda x: x[2] if len(x) > 2 else x[0])
+data['Genre4'] = data['Moviegenres'].apply(lambda x: x[3] if len(x) > 3 else x[0])
+
+# lets check the head of the data
+data[['genres','Genre1','Genre2','Genre3','Genre4']].head(5)
+```
+Output:
+<img width="404" height="146" alt="image" src="https://github.com/user-attachments/assets/ff4c9d7e-9d56-4663-9e8d-c4e789c2520e" />
+
+```
+# lets also calculate the social Media Popularity of a Movie
+
+# to calculate popularity of a movie, we can aggregate No. of voted users, No. of users for Reviews and facebook likes.
+
+data['Social_Media_Popularity'] = ((data['num_user_for_reviews']/data['num_voted_users'])*(data['movie_facebook_likes']))/1000000
+
+# lets also check the Top 10 Most Popular Movie on Social Media
+x = data[['movie_title','Social_Media_Popularity']].sort_values(by = 'Social_Media_Popularity',
+                                                                ascending = False).head(10).reset_index()
+print(x)
+
+sns.barplot(x='movie_title', y ='Social_Media_Popularity', data=x, palette = 'magma')
+plt.title('Top 10 Most Popular Movies on Social Media',fontsize = 20)
+plt.xticks(rotation = 90, fontsize = 14)
+plt.xlabel(' ')
+plt.show()
+```
+Output:
+
+<img width="520" height="143" alt="image" src="https://github.com/user-attachments/assets/9a88aff2-1757-426c-88a3-d4952bd84b04" />
+
+<img width="560" height="386" alt="image" src="https://github.com/user-attachments/assets/2c2a6929-8fc0-4e48-91fe-46f8954f0e24" />
 
 ## Conclusion
 
