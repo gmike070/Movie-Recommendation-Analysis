@@ -233,6 +233,7 @@ data['Genre4'] = data['Moviegenres'].apply(lambda x: x[3] if len(x) > 3 else x[0
 data[['genres','Genre1','Genre2','Genre3','Genre4']].head(5)
 ```
 Output:
+
 <img width="404" height="146" alt="image" src="https://github.com/user-attachments/assets/ff4c9d7e-9d56-4663-9e8d-c4e789c2520e" />
 
 ```
@@ -258,6 +259,146 @@ Output:
 <img width="520" height="143" alt="image" src="https://github.com/user-attachments/assets/9a88aff2-1757-426c-88a3-d4952bd84b04" />
 
 <img width="560" height="386" alt="image" src="https://github.com/user-attachments/assets/2c2a6929-8fc0-4e48-91fe-46f8954f0e24" />
+
+```
+# Analyzing which Genre is most Bankable
+
+# Lets compare the Gross with Genres
+
+# first group the genres and get max, min, avg gross of the movies of that genre
+display(data[['Genre1','gross',]].groupby(['Genre1']).agg(['max','mean','min']).style.background_gradient(cmap = 'Wistia'))
+
+# lets plot these values using lineplot
+data[['Genre1','gross',]].groupby(['Genre1']).agg(['max','mean','min']).plot(kind = 'line',color = ['red','black','blue'])
+plt.title('Which Genre is Most Bankable?',fontsize =20)
+plt.xticks(np.arange(17),['Action','Adventure','Amination','Biography','Comedy','Crime','Documentary','Drama','Family','Fantasy','Horror','Musical','Mystery','Romance','Sci-Fi','Thriller','Western'], rotation = 90, fontsize = 15)
+plt.ylabel('Gross',fontsize = 15)
+plt.xlabel(' ',)
+plt.show()
+```
+
+Output:
+
+<img width="246" height="360" alt="image" src="https://github.com/user-attachments/assets/d2a21d7d-9daf-4baa-9544-794146c50cbc" />
+<img width="628" height="361" alt="image" src="https://github.com/user-attachments/assets/254169e5-7136-4100-a9e4-296458d82cf4" />
+
+```
+print('The Most Profitable Movie from each Genre')
+display(data.loc[data.groupby(data['Genre1'])['Profit'].idxmax()][['Genre1','movie_title','gross']].style.background_gradient(cmap = 'copper'))
+```
+Output:
+
+<img width="305" height="329" alt="image" src="https://github.com/user-attachments/assets/23e9be9f-cfb3-4d2f-a8dc-6b29de1ac9c9" />
+```
+# Loss and Profit Analysis on English and Foreign Movies
+
+# lets covert year into interger
+data['title_year'] = data['title_year'].astype('int')
+
+print('Most Profitable years in Box office')
+display(data[['title_year','language','Profit']].groupby(['language','title_year']).agg('sum').sort_values(by = 'Profit',
+                                                                                                           ascending = False).head(10).style.background_gradient(cmap = 'Greens'))
+```
+Output:
+
+<img width="213" height="224" alt="image" src="https://github.com/user-attachments/assets/ec4054b1-177e-42e6-a72f-69880b5407fb" />
+
+```
+# lets plot then
+sns.lineplot(data=data, x='title_year',y ='Profit',hue ='language')
+plt.title('Time series for Box office Profit for English vs Foreign Movies', fontsize = 20)
+plt.xticks(fontsize = 18)
+plt.xlabel(' ')
+plt.show()
+```
+
+Output:
+
+<img width="628" height="301" alt="image" src="https://github.com/user-attachments/assets/2f72125b-2c9b-4763-bd84-72ea877be850" />
+```
+print('Movies that Made Huge Losses')
+display(data[data['Profit'] < -2000][['movie_title',
+                                      'language','Profit']].style.background_gradient(cmap = 'Reds'))
+```
+
+Output:
+
+<img width="280" height="158" alt="image" src="https://github.com/user-attachments/assets/4d0e16ec-f454-4859-9a28-f18cf31a4896" />
+
+```
+# Gross Comparison of Long and Short Movies
+
+display(data[data['duration'] == 'Long'][['movie_title','duration','gross', 'Profit']].sort_values(by = 'Profit',ascending = False).head(5).style.background_gradient(cmap = 'spring'))
+
+display(data[data['duration'] == 'Short'][['movie_title','duration','gross', 'Profit']].sort_values(by = 'Profit',ascending = False).head(5).style.background_gradient(cmap = 'spring'))
+```
+Output:
+<img width="430" height="281" alt="image" src="https://github.com/user-attachments/assets/98b7e09d-14f0-4252-95b4-3431d67d4850" />
+
+```
+sns.barplot(data=data, x= 'duration', y= 'gross', hue ='language', palette ='spring')
+plt.title('Gross Comparison')
+plt.show()
+```
+Output:
+
+<img width="676" height="344" alt="image" src="https://github.com/user-attachments/assets/b6ce3bde-dcad-42f7-a1fb-945dd6b53562" />
+```
+# Association between IMDB Rating and Duration
+
+print('Average IMDB Score for Long Duration Movies is {0:2f}'.format(data[data['duration'] =='Long']['imdb_score'].mean()))
+print('Average IMDB Score for Short Duration Movies is {0:2f}'.format(data[data['duration'] =='Short']['imdb_score'].mean()))
+```
+
+Output:
+
+<img width="455" height="37" alt="image" src="https://github.com/user-attachments/assets/ebd639a2-005f-43c1-b1be-211d8e88a97c" />
+
+```
+print('\nHighest Rated Long Duration Movie\n',
+      data[data['duration'] == 'Long'][['movie_title','imdb_score']].sort_values(by = 'imdb_score', ascending = False).head(1))
+
+print('\nHighest Rated Short Duration Movie\n',
+      data[data['duration'] == 'Short'][['movie_title','imdb_score']].sort_values(by = 'imdb_score', ascending = False).head(1))
+```
+Output:
+
+<img width="338" height="109" alt="image" src="https://github.com/user-attachments/assets/8804da8b-b11e-46c0-afb5-a2b79ba2ae17" />
+
+```
+sns.boxplot(data=data,x='imdb_score',y='duration',palette = 'copper')
+plt.title('IMDB Ratings vs Gross', fontsize = 20)
+plt.xticks(rotation = 90)
+plt.show()
+```
+Output:
+
+<img width="667" height="335" alt="image" src="https://github.com/user-attachments/assets/6c8f7da4-1609-41c6-819f-fad005232a15" />
+
+```
+# Comparing Critically Acclaimed Actors
+
+def query_actors(x):
+    # filter rows where actor_1, actor_2, or actor_3 is equal to x
+    mask = (
+        (data['actor_1_name'] == x) |
+        (data['actor_2_name'] == x) |
+        (data['actor_3_name'] == x)
+    )
+    
+    # select relevant columns
+    result = data.loc[mask, ['movie_title','budget','gross','title_year','genres','language','imdb_score']]
+    return result
+```
+
+```
+query_actors('Meryl Streep')
+```
+
+Output:
+
+<img width="589" height="374" alt="image" src="https://github.com/user-attachments/assets/e40ceff6-7e1f-443a-b808-0a9288c1540e" />
+
 
 ## Conclusion
 
