@@ -136,7 +136,11 @@ print(f"Total missing values: {total_missing}")
 # lets convert the gross and budget from $ to million $ to make our analysis easier
 data['gross'] = data['gross']/1000000
 data['budget'] = data['budget']/1000000
+```
 
+### 1.Profitability of Movies
+
+```
 # lets create a profit column using the budget and gross
 data['Profit'] = data['gross'] - data['budget']
 
@@ -153,6 +157,10 @@ Output:
 data['language'].value_counts()
 
 ```
+Output:
+
+<img width="185" height="327" alt="image" src="https://github.com/user-attachments/assets/e0ee4857-475d-44b6-8a91-562b7d5859b1" />
+
 
 ## Conclusion
 
