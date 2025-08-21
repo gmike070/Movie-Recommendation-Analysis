@@ -404,6 +404,86 @@ Output:
 <img width="589" height="374" alt="image" src="https://github.com/user-attachments/assets/e40ceff6-7e1f-443a-b808-0a9288c1540e" />
 
 
+```
+def actors_report(x):
+    # Filter for actor in any of the 3 actor columns
+    a = data[data['actor_1_name'] == x]
+    b = data[data['actor_2_name'] == x]
+    c = data[data['actor_3_name'] == x]
+    
+    y = pd.concat([a, b, c], ignore_index=True)
+
+    print("Time:", y['title_year'].min(), y['title_year'].max())
+    print("Max Gross: {:0.2f} Millions".format(y['gross'].max()))
+    print("Avg Gross: {:0.2f} Millions".format(y['gross'].mean()))
+    print("Min Gross: {:0.2f} Millions".format(y['gross'].min()))
+    print("Number of 100 Million Movies:", (y['gross'] > 100).shape[0])
+    print("Avg IMDB Score: {:0.2f}".format(y['imdb_score'].mean()))
+    print("Most Common Genres:\n", y['Genre1'].value_counts().head())
+    
+actors_report('Meryl Streep')
+```
+Output:
+
+<img width="231" height="191" alt="image" src="https://github.com/user-attachments/assets/d9925efe-781c-4c59-98fe-6351d37f8a99" />
+
+```
+def critically_acclaimed_actors(m):
+    # Filter all movies where actor appears in any actor column
+    a = data[data['actor_1_name'] == m]
+    b = data[data['actor_2_name'] == m]
+    c = data[data['actor_3_name'] == m]
+    
+    y = pd.concat([a, b, c], ignore_index=True)
+
+    # Sum critic reviews safely (ignores NaN automatically)
+    return int(y['num_critic_for_reviews'].sum())
+    
+actors_list = ['Brad Pitt', 'Leonardo DiCaprio', 'Tom Cruise']
+
+for actor in actors_list:
+    reviews = critically_acclaimed_actors(actor)
+    print(f"Number of Critic Reviews for {actor}: {reviews}")
+```
+Output:
+<img width="355" height="54" alt="image" src="https://github.com/user-attachments/assets/0090634a-1c5a-4bd7-906b-a18a9665d6fa" />
+
+```
+# Top movies based on Gross, and IMDB
+pd.set_option('display.max_rows', 30000)
+
+@interact
+def show_movies_more_than(column='imdb_score', score=9.0):
+    # filter based on column and score
+    x = data.loc[data[column] > score][[
+        'title_year','movie_title','director_name',
+        'actor_1_name','actor_2_name','actor_3_name',
+        'Profit','imdb_score',
+    ]]
+    
+    # sort by IMDB score (highest first)
+    x = x.sort_values(by='imdb_score', ascending=False)
+    
+    # drop duplicate movies by title
+    x = x.drop_duplicates(subset='movie_title', keep='first')
+    
+    return x
+```
+
+<img width="752" height="71" alt="image" src="https://github.com/user-attachments/assets/b1ab3c6f-6e6c-4839-b699-87484b3aef25" />
+
+```
+pd.set_option('display.max_rows', 30000)
+
+@interact
+def show_articles_more_than(column=['budget','gross'], x=1000):
+    return data.loc[data[column] > x][['movie_title','duration','gross','Profit','imdb_score']]
+```
+Output:
+
+<img width="394" height="166" alt="image" src="https://github.com/user-attachments/assets/8671a6f3-c0ee-44ef-bea3-ef57e71979f8" />
+
+
 ## Conclusion
 
 The analysis highlights that movie profitability is influenced not only by gross earnings but also by factors such as budget control, language, genre, and audience engagement. High-budget films often achieve strong gross revenues, but sustainable profitability is more evident in genres and languages with consistent ROI. Correlation analysis confirms the importance of audience votes and ratings as reliable indicators of commercial success. Furthermore, the recommendation system demonstrates the value of leveraging content similarity across genres, actors, and directors to enhance user experience. Overall, the project provides actionable insights for data-driven decision-making in film production, marketing, and distribution.
