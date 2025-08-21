@@ -161,6 +161,33 @@ Output:
 
 <img width="185" height="327" alt="image" src="https://github.com/user-attachments/assets/e0ee4857-475d-44b6-8a91-562b7d5859b1" />
 
+```
+# looking at the above output we can easily observe that out of 3,500 movies only 150 movies are of other languages
+
+# so it is better to keep only two languages that is English and Foreign
+def language(x):
+    if x == 'English':
+        return 'English'
+    else:
+        return 'Foreign'
+
+# lets apply the function on the language column
+data['language'] = data['language'].apply(language)
+
+# lets check the values again
+data['language'].value_counts()
+```
+Output:
+<img width="205" height="65" alt="image" src="https://github.com/user-attachments/assets/a2a196f7-89fd-4ebb-8d1b-53e1a0d5aa84" />
+
+
+
+
+
+
+
+
+
 
 ## Conclusion
 
