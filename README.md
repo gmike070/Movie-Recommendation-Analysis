@@ -289,6 +289,7 @@ display(data.loc[data.groupby(data['Genre1'])['Profit'].idxmax()][['Genre1','mov
 Output:
 
 <img width="305" height="329" alt="image" src="https://github.com/user-attachments/assets/23e9be9f-cfb3-4d2f-a8dc-6b29de1ac9c9" />
+
 ```
 # Loss and Profit Analysis on English and Foreign Movies
 
@@ -302,6 +303,7 @@ display(data[['title_year','language','Profit']].groupby(['language','title_year
 Output:
 
 <img width="213" height="224" alt="image" src="https://github.com/user-attachments/assets/ec4054b1-177e-42e6-a72f-69880b5407fb" />
+
 
 ```
 # lets plot then
@@ -343,6 +345,7 @@ plt.show()
 Output:
 
 <img width="676" height="344" alt="image" src="https://github.com/user-attachments/assets/b6ce3bde-dcad-42f7-a1fb-945dd6b53562" />
+
 ```
 # Association between IMDB Rating and Duration
 
@@ -374,6 +377,7 @@ plt.show()
 Output:
 
 <img width="667" height="335" alt="image" src="https://github.com/user-attachments/assets/6c8f7da4-1609-41c6-819f-fad005232a15" />
+
 
 ```
 # Comparing Critically Acclaimed Actors
