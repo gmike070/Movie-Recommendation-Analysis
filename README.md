@@ -144,10 +144,13 @@ data['Profit'] = data['gross'] - data['budget']
 data[['Profit','movie_title']].sort_values(by = 'Profit', ascending = False).head(10)
 
 ```
+Output:
+
 <img width="359" height="262" alt="image" src="https://github.com/user-attachments/assets/1996db25-ca70-48c2-be12-a121f1257e10" />
-
-
-
+```
+# lets check the values in the language column
+data['language'].value_counts()
+```
 ## Conclusion
 
 The analysis highlights that movie profitability is influenced not only by gross earnings but also by factors such as budget control, language, genre, and audience engagement. High-budget films often achieve strong gross revenues, but sustainable profitability is more evident in genres and languages with consistent ROI. Correlation analysis confirms the importance of audience votes and ratings as reliable indicators of commercial success. Furthermore, the recommendation system demonstrates the value of leveraging content similarity across genres, actors, and directors to enhance user experience. Overall, the project provides actionable insights for data-driven decision-making in film production, marketing, and distribution.
