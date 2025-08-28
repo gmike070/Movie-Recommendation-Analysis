@@ -12,7 +12,7 @@ Perform analysis and Basic Recommendations based on Similar Genres and Movies wh
 
 2.Language based Gross Analysis 
 
-3.Comparison of Gross and Profit for Different Genres, 
+3.Comparison of Gross and Profit for Different Genres. 
 
 4.Recommendation systems based on Actors, Movies, Genres. 
 
@@ -152,7 +152,10 @@ Output:
 
 <img width="359" height="262" alt="image" src="https://github.com/user-attachments/assets/1996db25-ca70-48c2-be12-a121f1257e10" />
 
+
+### 2.Language based Gross Analysis
 ```
+### 2.Language based Gross Analysis
 # lets check the values in the language column
 data['language'].value_counts()
 
@@ -200,6 +203,8 @@ Output:
 
 <img width="203" height="59" alt="image" src="https://github.com/user-attachments/assets/02d934bd-02c8-48b3-a0fe-0be48adffbd3" />
 
+
+### 3.Comparison of Gross and Profit for Different Genres
 ```
 # lets check the value in the Genres column
 
@@ -483,8 +488,8 @@ Output:
 
 <img width="394" height="166" alt="image" src="https://github.com/user-attachments/assets/8671a6f3-c0ee-44ef-bea3-ef57e71979f8" />
 
-
-### Recommending Movies Based on Languages
+### 4.Recommendation systems based on Languages,Actors,Genres. 
+#### Recommending Movies Based on Languages
 
 ```def recommend_lang(x):
    y = data[['language','movie_title','imdb_score']][data['language'] == x]
@@ -497,7 +502,7 @@ Output:
 <img width="338" height="308" alt="image" src="https://github.com/user-attachments/assets/c90d6d2d-0f70-4db3-9f00-9a4b1ef4ec9e" />
 
 
-### Recommending Movies based on Actors
+#### Recommending Movies based on Actors
 
 ```def recommend_movies_on_actors(x):
     # Filter all movies where actor appears in any actor column
@@ -518,7 +523,7 @@ Output:
 
 <img width="325" height="290" alt="image" src="https://github.com/user-attachments/assets/4efaf44c-5cc0-44da-9c1e-1a6e10d71859" />
 
-### Recommending Movies of similar Genres
+#### Recommending Movies of similar Genres
 
 
 ```from mlxtend.preprocessing import TransactionEncoder
@@ -548,6 +553,6 @@ Output:
 
 <img width="791" height="218" alt="image" src="https://github.com/user-attachments/assets/519aaad8-11c0-41f1-a870-6dbfa4d7690e" />
 
-## Conclusion
+### Conclusion
 
 The analysis highlights that movie profitability is influenced not only by gross earnings but also by factors such as budget control, language, genre, and audience engagement. High-budget films often achieve strong gross revenues, but sustainable profitability is more evident in genres and languages with consistent ROI. Correlation analysis confirms the importance of audience votes and ratings as reliable indicators of commercial success. Furthermore, the recommendation system demonstrates the value of leveraging content similarity across genres, actors, and directors to enhance user experience. Overall, the project provides actionable insights for data-driven decision-making in film production, marketing, and distribution.
