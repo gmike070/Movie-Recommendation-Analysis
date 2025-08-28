@@ -484,6 +484,70 @@ Output:
 <img width="394" height="166" alt="image" src="https://github.com/user-attachments/assets/8671a6f3-c0ee-44ef-bea3-ef57e71979f8" />
 
 
+### Recommending Movies Based on Languages
+
+```def recommend_lang(x):
+   y = data[['language','movie_title','imdb_score']][data['language'] == x]
+   y = y.sort_values(by = 'imdb_score', ascending = False)
+   return y.head(15)
+   recommend_lang('Foreign')
+```
+Output:
+
+<img width="338" height="308" alt="image" src="https://github.com/user-attachments/assets/c90d6d2d-0f70-4db3-9f00-9a4b1ef4ec9e" />
+
+
+### Recommending Movies based on Actors
+
+```def recommend_movies_on_actors(x):
+    # Filter all movies where actor appears in any actor column
+    a = data[['movie_title','imdb_score']][data['actor_1_name'] == x]
+    b = data[['movie_title','imdb_score']][data['actor_2_name'] == x]
+    c = data[['movie_title','imdb_score']][data['actor_3_name'] == x]
+    
+    y = pd.concat([a, b, c], ignore_index=True)
+    y = y.sort_values(by = 'imdb_score', ascending = False)
+
+    return y.head(15)
+
+recommend_movies_on_actors('Tom Cruise')
+
+```
+
+Output:
+
+<img width="325" height="290" alt="image" src="https://github.com/user-attachments/assets/4efaf44c-5cc0-44da-9c1e-1a6e10d71859" />
+
+### Recommending Movies of similar Genres
+
+
+```from mlxtend.preprocessing import TransactionEncoder
+
+x = data['genres'].str.split('|')
+te = TransactionEncoder()
+x = te.fit_transform(x)
+x = pd.DataFrame(x,columns = te.columns_)
+
+x.head()
+```
+Output:
+
+<img width="812" height="183" alt="image" src="https://github.com/user-attachments/assets/e86ba328-b573-4bd9-b88f-b3ff37140abc" />
+
+```genres = x.astype('int')
+genres.head()
+```
+Output:
+
+<img width="809" height="185" alt="image" src="https://github.com/user-attachments/assets/97bd2a8a-95fc-4645-91d6-40cd8b3a58c6" />
+
+```genres.insert(0,'movie_title',data['movie_title'])
+genres.head()
+```
+Output:
+
+<img width="791" height="218" alt="image" src="https://github.com/user-attachments/assets/519aaad8-11c0-41f1-a870-6dbfa4d7690e" />
+
 ## Conclusion
 
 The analysis highlights that movie profitability is influenced not only by gross earnings but also by factors such as budget control, language, genre, and audience engagement. High-budget films often achieve strong gross revenues, but sustainable profitability is more evident in genres and languages with consistent ROI. Correlation analysis confirms the importance of audience votes and ratings as reliable indicators of commercial success. Furthermore, the recommendation system demonstrates the value of leveraging content similarity across genres, actors, and directors to enhance user experience. Overall, the project provides actionable insights for data-driven decision-making in film production, marketing, and distribution.
